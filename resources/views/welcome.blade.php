@@ -25,6 +25,17 @@
             padding-top: 0.75rem; padding-bottom: 0.75rem;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
+        /* Transisi khusus untuk menu mobile */
+        #mobileDropdown {
+            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobileDropdown.menu-open {
+            max-height: 400px;
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="antialiased text-gray-800">
@@ -32,7 +43,8 @@
     <header id="beranda" class="relative min-h-screen flex flex-col overflow-hidden">
         
         <nav id="mainNav" class="fixed top-0 z-50 w-full flex justify-between items-center px-6 lg:px-16 py-6 border-b border-white/10 transition-all duration-500 bg-black/20 backdrop-blur-md">
-            <a href="#beranda" class="flex items-center gap-3 cursor-pointer group">
+            
+            <a href="#beranda" class="flex items-center gap-3 cursor-pointer group relative z-50">
                 <div class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 group-hover:bg-[#00C853] transition-all">
                     @if($setting?->logo)
                         <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo" class="w-6 h-6 object-contain">
@@ -55,7 +67,23 @@
                 <li><a href="#tutorial" class="hover:text-[#00C853] transition">Blog</a></li>
             </ul>
 
-            <a href="/admin" class="bg-[#00C853] text-white font-bold px-6 py-2 rounded-full text-sm hover:bg-green-600 shadow-lg">Masuk Admin</a>
+            <div class="flex items-center gap-4 relative z-50">
+                <a href="/admin" class="hidden md:block bg-[#00C853] text-white font-bold px-6 py-2 rounded-full text-sm hover:bg-green-600 shadow-lg">Masuk Admin</a>
+                
+                <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none hover:text-[#00C853] transition">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <div id="mobileDropdown" class="absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 flex flex-col items-center py-0 md:hidden">
+                <div class="flex flex-col w-full px-6 py-6 gap-4 text-center">
+                    <a href="#beranda" class="mobile-link text-gray-200 hover:text-[#00C853] font-semibold text-lg py-2 border-b border-gray-800">Beranda</a>
+                    <a href="#profil" class="mobile-link text-gray-200 hover:text-[#00C853] font-semibold text-lg py-2 border-b border-gray-800">Profil Mahasiswa</a>
+                    <a href="#store" class="mobile-link text-gray-200 hover:text-[#00C853] font-semibold text-lg py-2 border-b border-gray-800">RVPS Store</a>
+                    <a href="#tutorial" class="mobile-link text-gray-200 hover:text-[#00C853] font-semibold text-lg py-2 border-b border-gray-800">Catatan Blog</a>
+                    <a href="/admin" class="mobile-link bg-[#00C853] text-white font-bold py-3 rounded-full mt-4 w-full">Dashboard Admin</a>
+                </div>
+            </div>
         </nav>
 
         <div class="absolute inset-0 z-0 swiper heroSwiper">
@@ -74,7 +102,7 @@
             </div>
         </div>
 
-        <div class="relative z-10 flex-grow flex items-center px-6 lg:px-16 max-w-7xl mx-auto w-full pt-10">
+        <div class="relative z-10 flex-grow flex items-center px-6 lg:px-16 max-w-7xl mx-auto w-full pt-20">
             <div class="max-w-2xl text-white">
                 <div class="inline-flex items-center gap-2 bg-black/40 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6">
                     <span class="w-2.5 h-2.5 rounded-full bg-[#00C853] animate-pulse"></span>
@@ -116,7 +144,7 @@
             </div>
 
             <div class="lg:col-span-8 space-y-8">
-                <div class="bg-white rounded-[2.5rem] p-10 shadow-sm border border-gray-100">
+                <div class="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-gray-100">
                     <h3 class="text-2xl font-bold text-gray-800 mb-8 border-b border-gray-50 pb-4 flex items-center gap-3">
                         <i class="fas fa-id-card text-[#00C853]"></i> Identitas Mahasiswa
                     </h3>
@@ -132,7 +160,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-[2.5rem] p-10 shadow-sm border border-gray-100">
+                <div class="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-gray-100">
                     <h3 class="text-2xl font-bold text-gray-800 mb-8 border-b border-gray-50 pb-4 flex items-center gap-3">
                         <i class="fas fa-graduation-cap text-[#00C853]"></i> Riwayat Pendidikan
                     </h3>
@@ -141,7 +169,7 @@
                             @foreach($profile->pendidikan as $edu)
                             <div class="relative">
                                 <div class="absolute -left-[2.15rem] top-1.5 w-4 h-4 bg-[#00C853] rounded-full border-4 border-white shadow-sm"></div>
-                                <h4 class="font-bold text-gray-800 text-lg">{{ $edu['institusi'] }} <span class="text-gray-400 font-normal text-sm ml-2">| {{ $edu['tahun'] }}</span></h4>
+                                <h4 class="font-bold text-gray-800 text-lg">{{ $edu['institusi'] }} <span class="text-gray-400 font-normal text-sm ml-2 md:inline block">| {{ $edu['tahun'] }}</span></h4>
                                 <p class="text-sm text-gray-500 mt-2 leading-relaxed">{{ $edu['deskripsi'] }}</p>
                             </div>
                             @endforeach
@@ -151,7 +179,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-[2.5rem] p-10 shadow-sm border border-gray-100">
+                <div class="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-gray-100">
                     <h3 class="text-2xl font-bold text-gray-800 mb-8 border-b border-gray-50 pb-4 flex items-center gap-3">
                         <i class="fas fa-briefcase text-[#00C853]"></i> Pengalaman Organisasi & Kerja
                     </h3>
@@ -160,7 +188,7 @@
                             @foreach($profile->pengalaman as $exp)
                             <div class="relative">
                                 <div class="absolute -left-[2.15rem] top-1.5 w-4 h-4 bg-[#00C853] rounded-full border-4 border-white shadow-sm"></div>
-                                <h4 class="font-bold text-gray-800 text-lg">{{ $exp['posisi'] }} <span class="text-gray-400 font-normal text-sm ml-2">| {{ $exp['tahun'] }}</span></h4>
+                                <h4 class="font-bold text-gray-800 text-lg">{{ $exp['posisi'] }} <span class="text-gray-400 font-normal text-sm ml-2 md:inline block">| {{ $exp['tahun'] }}</span></h4>
                                 <p class="text-sm text-gray-500 mt-2 leading-relaxed">{{ $exp['deskripsi'] }}</p>
                             </div>
                             @endforeach
@@ -176,7 +204,7 @@
 
     <section id="store" class="max-w-7xl mx-auto px-6 py-20 scroll-mt-24">
         <div class="text-center mb-16">
-            <h2 class="text-4xl font-extrabold text-gray-800 mb-4">{{ $setting?->judul_section_store ?? 'RVPS Store' }}</h2>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">{{ $setting?->judul_section_store ?? 'RVPS Store' }}</h2>
             <p class="text-gray-500">Klik produk untuk melihat detail dan memesan.</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -196,7 +224,7 @@
                 </div>
             </a>
             @empty
-                <p class="col-span-full text-center text-gray-500 italic">Etalase sedang dipersiapkan.</p>
+                <p class="col-span-full text-center text-gray-500 italic py-10">Etalase sedang dipersiapkan.</p>
             @endforelse
         </div>
     </section>
@@ -204,7 +232,7 @@
     <section id="tutorial" class="max-w-7xl mx-auto px-6 py-24 scroll-mt-24">
         <div class="flex justify-between items-end mb-16">
             <div>
-                <h2 class="text-4xl font-extrabold text-gray-800 mb-2">{{ $setting?->judul_section_blog ?? 'Catatan & Tutorial' }}</h2>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-2">{{ $setting?->judul_section_blog ?? 'Catatan & Tutorial' }}</h2>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -226,82 +254,84 @@
                 </div>
             </a>
             @empty
-                <p class="col-span-full text-center text-gray-500 italic">Belum ada cerita yang diunggah.</p>
+                <p class="col-span-full text-center text-gray-500 italic py-10">Belum ada cerita yang diunggah.</p>
             @endforelse
         </div>
     </section>
 
     <section id="portofolio" class="max-w-7xl mx-auto px-6 py-20 scroll-mt-24">
         <div class="text-center mb-16">
-            <h2 class="text-3xl font-extrabold text-gray-800">{{ $setting?->judul_section_portfolio ?? 'Galeri Momen' }}</h2>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800">{{ $setting?->judul_section_portfolio ?? 'Galeri Momen' }}</h2>
             <p class="text-gray-500 mt-2">Klik foto untuk melihat ukuran penuh.</p>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             @forelse($portfolios as $portfolio)
-            <a data-fslightbox="gallery" href="{{ asset('storage/' . $portfolio->gambar) }}" class="group relative aspect-square rounded-[2rem] overflow-hidden shadow-md block">
+            <a data-fslightbox="gallery" href="{{ asset('storage/' . $portfolio->gambar) }}" class="group relative aspect-square rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-md block">
                 <img src="{{ asset('storage/' . $portfolio->gambar) }}" alt="{{ $portfolio->judul }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-center items-center p-6">
-                    <i class="fas fa-search-plus text-white text-3xl mb-2 opacity-80"></i>
-                    <p class="text-white font-bold text-sm uppercase text-center">{{ $portfolio->judul }}</p>
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-center items-center p-4">
+                    <i class="fas fa-search-plus text-white text-2xl md:text-3xl mb-2 opacity-80"></i>
+                    <p class="text-white font-bold text-xs md:text-sm uppercase text-center">{{ $portfolio->judul }}</p>
                 </div>
             </a>
             @empty
-                <p class="col-span-full text-center text-gray-500 italic">Galeri masih kosong.</p>
+                <p class="col-span-full text-center text-gray-500 italic py-10">Galeri masih kosong.</p>
             @endforelse
         </div>
     </section>
 
-    <footer class="bg-[#0B1120] text-gray-400 py-24 mt-20 border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-20 pb-20 border-b border-white/5">
+    <footer class="bg-[#0B1120] text-gray-400 py-16 md:py-24 mt-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20 pb-16 md:pb-20 border-b border-white/5">
             
             <div>
-                <h4 class="text-white font-bold text-lg mb-10 flex items-center gap-3 uppercase tracking-widest">
+                <h4 class="text-white font-bold text-lg mb-8 flex items-center gap-3 uppercase tracking-widest">
                     <i class="fas fa-calendar-alt text-[#00C853]"></i> Jadwal Kuliah
                 </h4>
                 <div class="space-y-4 text-xs font-medium">
                     @forelse($schedules ?? [] as $sch)
-                        <div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center bg-white/5 p-4 rounded-2xl border border-white/5 gap-2">
                             <span class="text-gray-100">{{ $sch->hari }}</span>
                             <span class="{{ strtolower($sch->status) == 'free' ? 'text-green-400' : 'text-yellow-400' }} tracking-widest">
                                 {{ $sch->jam }} [{{ $sch->status }}]
                             </span>
                         </div>
                     @empty
-                        <p class="italic">Jadwal belum diupdate.</p>
+                        <p class="italic text-center sm:text-left">Jadwal belum diupdate.</p>
                     @endforelse
                 </div>
             </div>
 
             <div>
-                <h4 class="text-white font-bold text-lg mb-10 uppercase tracking-widest">Akses Cepat</h4>
+                <h4 class="text-white font-bold text-lg mb-8 uppercase tracking-widest">Akses Cepat</h4>
                 <ul class="space-y-4 text-sm font-semibold">
-                    <li><a href="#profil" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-[8px] text-[#00C853]"></i> Tentang RVPS</a></li>
-                    <li><a href="#store" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-[8px] text-[#00C853]"></i> RVPS Store</a></li>
-                    <li><a href="#tutorial" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-[8px] text-[#00C853]"></i> Blog & Artikel</a></li>
+                    <li><a href="#profil" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-[8px] text-[#00C853]"></i> Tentang Saya</a></li>
+                    <li><a href="#store" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-[8px] text-[#00C853]"></i> Layanan & Produk</a></li>
+                    <li><a href="#tutorial" class="hover:text-white transition flex items-center gap-2"><i class="fas fa-chevron-right text-[8px] text-[#00C853]"></i> Blog & Catatan</a></li>
                 </ul>
             </div>
 
             <div>
-                <div class="flex items-center gap-4 mb-10">
+                <div class="flex items-center gap-4 mb-8">
                     <div class="w-12 h-12 bg-[#00C853] rounded-2xl flex items-center justify-center shadow-lg shadow-green-500/20 rotate-3">
                         <i class="fas fa-code text-white text-xl"></i>
                     </div>
                     <h4 class="text-white font-black text-2xl uppercase tracking-tighter">{{ $setting?->nama_web ?? 'RVPS Studio' }}</h4>
                 </div>
-                <p class="text-sm leading-relaxed mb-10 opacity-60">"Membangun ekosistem digital mandiri, transparan, dan inovatif."</p>
+                <p class="text-sm leading-relaxed mb-8 opacity-60">"Membangun ekosistem digital mandiri, transparan, dan inovatif."</p>
                 <div class="flex gap-4">
-                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $profile->whatsapp ?? '') }}" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#00C853] transition-all"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $profile->whatsapp ?? '') }}" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#00C853] transition-all" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     <a href="mailto:{{ $profile->email ?? '' }}" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-red-500 transition-all"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
         </div>
         
-        <div class="max-w-7xl mx-auto px-6 pt-12 flex flex-col md:flex-row justify-between items-center text-[10px] font-bold uppercase tracking-[0.3em] opacity-40">
-            <p>&copy; {{ date('Y') }} {{ $setting?->nama_web ?? 'RVPS Studio' }} | Richard Valentino - F52123032</p>
+        <div class="max-w-7xl mx-auto px-6 pt-12 flex flex-col md:flex-row justify-between items-center text-[10px] font-bold uppercase tracking-[0.3em] opacity-40 text-center gap-4 md:gap-0">
+            <p>&copy; {{ date('Y') }} {{ $setting?->nama_web ?? 'RVPS Studio' }}</p>
+            <p>Richard Valentino - F52123032</p>
         </div>
     </footer>
 
     <script>
+        // 1. Eksekusi Swiper untuk Slider Background
         const swiper = new Swiper('.heroSwiper', {
             loop: true,
             effect: 'fade',
@@ -309,6 +339,7 @@
             fadeEffect: { crossFade: true }
         });
 
+        // 2. Eksekusi Menu Navbar agar Sticky (Nempel di atas)
         const nav = document.getElementById('mainNav');
         window.onscroll = function() {
             if (window.pageYOffset > 50) {
@@ -319,6 +350,35 @@
                 nav.classList.replace('py-4', 'py-6');
             }
         };
+
+        // 3. Eksekusi Menu Garis Tiga (Hamburger) Khusus HP
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileDropdown');
+        const mobileIcon = mobileBtn.querySelector('i');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('menu-open');
+            if(mobileMenu.classList.contains('menu-open')) {
+                mobileIcon.classList.remove('fa-bars');
+                mobileIcon.classList.add('fa-times');
+                mobileIcon.style.color = '#00C853'; // Hijau saat terbuka
+            } else {
+                mobileIcon.classList.remove('fa-times');
+                mobileIcon.classList.add('fa-bars');
+                mobileIcon.style.color = 'white'; // Putih saat tertutup
+            }
+        });
+
+        // Tutup menu otomatis kalau salah satu link di HP diklik
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('menu-open');
+                mobileIcon.classList.remove('fa-times');
+                mobileIcon.classList.add('fa-bars');
+                mobileIcon.style.color = 'white';
+            });
+        });
     </script>
 
 </body>
