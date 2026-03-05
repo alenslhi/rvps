@@ -19,6 +19,7 @@ class WebSettingResource extends Resource
 {
     protected static ?string $model = WebSetting::class;
     protected static ?string $navigationIcon = 'heroicon-o-cog';
+    protected static ?string $navigationLabel = 'Web Settings';
 
     public static function form(Form $form): Form
     {
@@ -26,19 +27,29 @@ class WebSettingResource extends Resource
             ->schema([
                 Section::make('Identitas Website')
                     ->schema([
-                        TextInput::make('nama_web')->label('Nama Brand / Web')->required()->default('RVPS Studio'),
-                    ]),
-                Section::make('Pengaturan Hero Banner')
+                        TextInput::make('nama_web')->required()->default('RVPS Studio'),
+                        FileUpload::make('logo')->image()->directory('settings')->label('Logo Web (Kecil)'),
+                    ])->columns(2),
+
+                Section::make('Pengaturan Hero Banner & Slideshow')
                     ->schema([
                         TextInput::make('hero_judul')->required(),
-                        Textarea::make('hero_deskripsi')->required()->rows(3),
-                        FileUpload::make('hero_gambar')->image()->directory('settings'),
+                        Textarea::make('hero_deskripsi')->required()->rows(2),
+                        FileUpload::make('hero_slideshow')
+                            ->label('Background Slideshow (Bisa pilih banyak foto sekaligus)')
+                            ->image()
+                            ->multiple()
+                            ->reorderable()
+                            ->directory('hero')
+                            ->columnSpanFull(),
                     ]),
-                Section::make('Pengaturan Footer (Jam Layanan)')
+
+                Section::make('Ubah Judul Bagian (Section)')
                     ->schema([
-                        TextInput::make('jam_senin_kamis')->label('Senin - Kamis')->required(),
-                        TextInput::make('jam_jumat')->label('Jumat')->required(),
-                    ])->columns(2),
+                        TextInput::make('judul_section_store')->label('Judul Store')->default('Produk Unggulan RVPS Store'),
+                        TextInput::make('judul_section_blog')->label('Judul Blog')->default('Catatan & Tutorial Terbaru'),
+                        TextInput::make('judul_section_portfolio')->label('Judul Galeri')->default('Momen & Aktivitas'),
+                    ])->columns(3),
             ]);
     }
 
@@ -46,16 +57,12 @@ class WebSettingResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('hero_gambar')->square(),
+                ImageColumn::make('logo')->square()->defaultImageUrl(url('https://ui-avatars.com/api/?name=RVPS')),
                 TextColumn::make('nama_web')->searchable(),
                 TextColumn::make('hero_judul')->limit(30),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ]);
+            ->actions([Tables\Actions\EditAction::make()]);
     }
-
-    public static function getRelations(): array { return []; }
 
     public static function getPages(): array
     {

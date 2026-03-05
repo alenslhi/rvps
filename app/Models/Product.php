@@ -9,6 +9,10 @@ class Product extends Model
 {
     use HasFactory;
 
-    // Tambahkan baris ini di dalam class Model
-    protected $guarded = []; 
+    protected $guarded = [];
+
+    // Tambahkan block casts ini:
+    protected $casts = [
+        'galeri_produk' => 'array',
+    ];
 }
