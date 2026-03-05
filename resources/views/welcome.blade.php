@@ -54,9 +54,9 @@
                 </div>
                 <div>
                     <h1 class="font-bold text-lg leading-tight tracking-wide text-white text-shadow uppercase">
-                        {{ $setting?->nama_web ?? 'RVPS Studio' }}
+                        {{ $setting?->nama_web ?? 'RVPS' }}
                     </h1>
-                    <p class="text-[10px] text-gray-300 uppercase tracking-widest text-shadow">Sistem Informasi UNTAD</p>
+                    <p class="text-[10px] text-gray-300 uppercase tracking-widest text-shadow">Personal Website</p>
                 </div>
             </a>
             
@@ -68,7 +68,7 @@
             </ul>
 
             <div class="flex items-center gap-4 relative z-50">
-                <a href="/admin" class="hidden md:block bg-[#00C853] text-white font-bold px-6 py-2 rounded-full text-sm hover:bg-green-600 shadow-lg">Masuk Admin</a>
+                <a href="/admin" class="hidden md:block bg-[#00C853] text-white font-bold px-6 py-2 rounded-full text-sm hover:bg-green-600 shadow-lg">Admin</a>
                 
                 <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none hover:text-[#00C853] transition">
                     <i class="fas fa-bars"></i>
@@ -78,10 +78,10 @@
             <div id="mobileDropdown" class="absolute top-full left-0 w-full bg-black/95 backdrop-blur-xl border-b border-white/10 flex flex-col items-center py-0 md:hidden">
                 <div class="flex flex-col w-full px-6 py-6 gap-4 text-center">
                     <a href="#beranda" class="mobile-link text-gray-200 hover:text-[#00C853] font-semibold text-lg py-2 border-b border-gray-800">Beranda</a>
-                    <a href="#profil" class="mobile-link text-gray-200 hover:text-[#00C853] font-semibold text-lg py-2 border-b border-gray-800">Profil Mahasiswa</a>
-                    <a href="#store" class="mobile-link text-gray-200 hover:text-[#00C853] font-semibold text-lg py-2 border-b border-gray-800">RVPS Store</a>
-                    <a href="#tutorial" class="mobile-link text-gray-200 hover:text-[#00C853] font-semibold text-lg py-2 border-b border-gray-800">Catatan Blog</a>
-                    <a href="/admin" class="mobile-link bg-[#00C853] text-white font-bold py-3 rounded-full mt-4 w-full">Dashboard Admin</a>
+                    <a href="#profil" class="mobile-link text-gray-200 hover:text-[#00C853] font-semibold text-lg py-2 border-b border-gray-800">Profil</a>
+                    <a href="#store" class="mobile-link text-gray-200 hover:text-[#00C853] font-semibold text-lg py-2 border-b border-gray-800">Store</a>
+                    <a href="#tutorial" class="mobile-link text-gray-200 hover:text-[#00C853] font-semibold text-lg py-2 border-b border-gray-800">Blog</a>
+                    <a href="/admin" class="mobile-link bg-[#00C853] text-white font-bold py-3 rounded-full mt-4 w-full">Admin</a>
                 </div>
             </div>
         </nav>
@@ -106,7 +106,7 @@
             <div class="max-w-2xl text-white">
                 <div class="inline-flex items-center gap-2 bg-black/40 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-6">
                     <span class="w-2.5 h-2.5 rounded-full bg-[#00C853] animate-pulse"></span>
-                    <span class="text-xs font-bold tracking-widest uppercase">E-Government Specialist</span>
+                    <span class="text-xs font-bold tracking-widest uppercase">Mahasiswa</span>
                 </div>
                 <h2 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6 text-shadow">
                     {{ $setting?->hero_judul ?? 'Selamat Datang di Website RVPS' }}
@@ -146,15 +146,15 @@
             <div class="lg:col-span-8 space-y-8">
                 <div class="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-gray-100">
                     <h3 class="text-2xl font-bold text-gray-800 mb-8 border-b border-gray-50 pb-4 flex items-center gap-3">
-                        <i class="fas fa-id-card text-[#00C853]"></i> Identitas Mahasiswa
+                        <i class="fas fa-id-card text-[#00C853]"></i> Identitas Saya
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest block mb-2">Umur</label>
+                            <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest block mb-2">Usia</label>
                             <p class="font-bold text-gray-800 text-lg">{{ $profile->usia ?? '21' }} Tahun</p>
                         </div>
                         <div>
-                            <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest block mb-2">Lokasi Saat Ini</label>
+                            <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest block mb-2">Alamat Saat Ini</label>
                             <p class="font-bold text-gray-800 text-lg">{{ $profile->alamat }}</p>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
 
                 <div class="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-sm border border-gray-100">
                     <h3 class="text-2xl font-bold text-gray-800 mb-8 border-b border-gray-50 pb-4 flex items-center gap-3">
-                        <i class="fas fa-briefcase text-[#00C853]"></i> Pengalaman Organisasi & Kerja
+                        <i class="fas fa-briefcase text-[#00C853]"></i> Pengalaman Organisasi
                     </h3>
                     <div class="relative pl-8 timeline-line space-y-10">
                         @if($profile->pengalaman)
@@ -284,7 +284,7 @@
             
             <div>
                 <h4 class="text-white font-bold text-lg mb-8 flex items-center gap-3 uppercase tracking-widest">
-                    <i class="fas fa-calendar-alt text-[#00C853]"></i> Jadwal Kuliah
+                    <i class="fas fa-calendar-alt text-[#00C853]"></i> Jadwal Saya
                 </h4>
                 <div class="space-y-4 text-xs font-medium">
                     @forelse($schedules ?? [] as $sch)
@@ -314,9 +314,9 @@
                     <div class="w-12 h-12 bg-[#00C853] rounded-2xl flex items-center justify-center shadow-lg shadow-green-500/20 rotate-3">
                         <i class="fas fa-code text-white text-xl"></i>
                     </div>
-                    <h4 class="text-white font-black text-2xl uppercase tracking-tighter">{{ $setting?->nama_web ?? 'RVPS Studio' }}</h4>
+                    <h4 class="text-white font-black text-2xl uppercase tracking-tighter">{{ $setting?->nama_web ?? 'RVPS' }}</h4>
                 </div>
-                <p class="text-sm leading-relaxed mb-8 opacity-60">"Membangun ekosistem digital mandiri, transparan, dan inovatif."</p>
+                <p class="text-sm leading-relaxed mb-8 opacity-60">"Tidur Untuk Bermimpi, Bangun Untuk Mewujudkan Mimpi."</p>
                 <div class="flex gap-4">
                     <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $profile->whatsapp ?? '') }}" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-[#00C853] transition-all" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     <a href="mailto:{{ $profile->email ?? '' }}" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-red-500 transition-all"><i class="fas fa-envelope"></i></a>
@@ -325,8 +325,8 @@
         </div>
         
         <div class="max-w-7xl mx-auto px-6 pt-12 flex flex-col md:flex-row justify-between items-center text-[10px] font-bold uppercase tracking-[0.3em] opacity-40 text-center gap-4 md:gap-0">
-            <p>&copy; {{ date('Y') }} {{ $setting?->nama_web ?? 'RVPS Studio' }}</p>
-            <p>Richard Valentino - F52123032</p>
+            <p>&copy; {{ date('Y') }} {{ $setting?->nama_web ?? 'RVPS' }}</p>
+            <p>Richard Valentino Parulian Silalahi</p>
         </div>
     </footer>
 
